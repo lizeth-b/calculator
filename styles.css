@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+}
+
+main,
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  background-color: #e9e6df;
+}
+
+.controls {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row button {
+  flex: 1;
+  font: 100% inherit;
+  cursor: pointer;
+}
