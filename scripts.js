@@ -7,8 +7,10 @@ function Calculator() {
   };
 
   this.calculate = function(arr) {
-    if (arr[1] != '' && !isNaN(+arr[0]) && !isNaN(+[2])) {
+    if (arr.length === 3 && arr[1] != '' && !isNaN(+arr[0]) && !isNaN(+[2])) {
       return String(this.operations[arr[1]](+arr[0], +arr[2]));
+    } else if (arr.length === 1 && !isNaN(+arr[0])) {
+      return arr[0];
     } else {
       return NaN;
     }
@@ -37,10 +39,14 @@ function findOperator(str) {
 function parseDisplay(str) {
   let input = [];
   let oper = findOperator(str);
-  input.push(str.slice(0, str.indexOf(oper)));
-  input.push(oper);
-  input.push(str.slice(str.indexOf(oper) + 1, str.length));
-  return input
+  if (isValidOperator(oper)) {
+    input.push(str.slice(0, str.indexOf(oper)));
+    input.push(oper);
+    input.push(str.slice(str.indexOf(oper) + 1, str.length));
+    return input;
+  } else {
+    return [str];
+  }
 }
 
 const calc = new Calculator;
@@ -94,3 +100,6 @@ operators.forEach((oper) => {
 });
 
 const equals = document.querySelector('[data-equal]');
+equals.addEventListener('click', () => {
+  display.textContent = calc.calculate(parseDisplay(display.textContent));
+});
