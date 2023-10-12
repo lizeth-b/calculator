@@ -6,38 +6,39 @@
   <title>Calculator</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 16 16'><text x='0' y='14'>🧮</text></svg>" />
   <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js" defer></script>
 </head>
 <body>
 <main>
-  <section class="display">12345</section>
+  <section class="display" data-display>0</section>
   <section class="controls">
     <div class="row">
-      <button class="ac">CLEAR</button>
-      <button class="undo">DELETE</button>
+      <button class="ac" data-ac>ALL CLEAR</button>
+      <button class="undo" data-undo>UNDO</button>
     </div>
     <div class="row">
-      <button class="seven">7</button>
-      <button class="eight">8</button>
-      <button class="nine">9</button>
-      <button class="divide">÷</button>
+      <button class="num" data-num>7</button>
+      <button class="num" data-num>8</button>
+      <button class="num" data-num>9</button>
+      <button class="oper" data-oper>÷</button>
     </div>
     <div class="row">
-      <button class="four">4</button>
-      <button class="five">5</button>
-      <button class="six">6</button>
-      <button class="multiply">×</button>
+      <button class="num" data-num>4</button>
+      <button class="num" data-num>5</button>
+      <button class="num" data-num>6</button>
+      <button class="oper" data-oper>×</button>
     </div>
     <div class="row">
-      <button class="one">1</button>
-      <button class="two">2</button>
-      <button class="three">3</button>
-      <button class="minus">−</button>
+      <button class="num" data-num>1</button>
+      <button class="num" data-num>2</button>
+      <button class="num" data-num>3</button>
+      <button class="oper" data-oper>−</button>
     </div>
     <div class="row">
-      <button class="dot">.</button>
-      <button class="zero">0</button>
-      <button class="equal">=</button>
-      <button class="add">+</button>
+      <button class="dot" data-dot>.</button>
+      <button class="num" data-num>0</button>
+      <button class="equal" data-equal>=</button>
+      <button class="oper" data-oper>+</button>
     </div>
   </section>
 </main>
