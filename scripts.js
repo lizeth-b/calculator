@@ -13,7 +13,11 @@ function Calculator() {
       && !isNaN(+arr[0])
       && !isNaN(+[2])
       ) {
-      return String(this.operations[arr[1]](+arr[0], +arr[2]));
+      if (!(arr[1] === '÷' && +arr[2] === 0)) {
+        return String(this.operations[arr[1]](+arr[0], +arr[2]));
+      } else {
+        return errorMsgs[Math.floor(Math.random() * 6)];
+      }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0])) {
       return arr[0];
     } else {
@@ -88,11 +92,11 @@ nums.forEach((num) => {
     if (!isNaN(+e.target.innerText)) {
       if (display.textContent === '0') {
         display.textContent = e.target.innerText;
-      } else if (!errorMsgs.includes(display.textContent)) {
+      } else {
         display.textContent += e.target.innerText;
       }
     } else if (!errorMsgs.includes(display.textContent)) {
-      display.textContent = errorMsgs[Math.floor(Math.random() * 5)];
+      display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     }
   });
 });
@@ -100,7 +104,7 @@ nums.forEach((num) => {
 const operators = document.querySelectorAll('[data-oper]');
 operators.forEach((oper) => {
   oper.addEventListener('click', (e) => {
-    if (isValidOperator(e.target.innerText) && !errorMsgs.includes(display.textContent)) {
+    if (isValidOperator(e.target.innerText)) {
       let currentOper = findOperator(display.textContent);
       if (currentOper === '') {
         display.textContent += e.target.innerText;
@@ -114,14 +118,12 @@ operators.forEach((oper) => {
         display.textContent += e.target.innerText;
       }
     } else if (!errorMsgs.includes(display.textContent)) {
-      display.textContent = errorMsgs[Math.floor(Math.random() * 5)];
+      display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     }
   });
 });
 
 const equals = document.querySelector('[data-equal]');
 equals.addEventListener('click', () => {
-  if (!errorMsgs.includes(display.textContent)) {
-    display.textContent = calc.calculate(parseDisplay(display.textContent));
-  }
+  display.textContent = calc.calculate(parseDisplay(display.textContent));
 });
