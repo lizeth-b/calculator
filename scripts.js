@@ -54,16 +54,11 @@ function parseDisplay(str) {
     if (str.indexOf(oper) + 1 < str.length) {
       input.push(str.slice(str.indexOf(oper) + 1, str.length));
     }
-    console.log(input);
     return input;
   } else {
-    console.log([str]);
     return [str];
   }
 }
-
-const calc = new Calculator;
-const display = document.querySelector('[data-display]');
 
 const errorMsgs = ['What are you doing?', 
   'I can\'t compute that!',
@@ -71,6 +66,9 @@ const errorMsgs = ['What are you doing?',
   'I\'ll pretend I didn\'t see that.',
   'Excuse me?',
   'You\'re not even making sense!'];
+
+const calc = new Calculator;
+const display = document.querySelector('[data-display]');
 
 const ac = document.querySelector('[data-ac]');
 ac.addEventListener('click', () => display.textContent = '0');
@@ -121,6 +119,13 @@ operators.forEach((oper) => {
       display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     }
   });
+});
+
+const dot = document.querySelector('[data-dot]');
+dot.addEventListener('click', (e) => {
+  if (!parseDisplay(display.textContent).at(-1).includes('.')) {
+    display.textContent += '.';
+  }
 });
 
 const equals = document.querySelector('[data-equal]');
