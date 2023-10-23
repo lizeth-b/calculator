@@ -171,7 +171,7 @@ document.body.addEventListener(
       document.querySelector(`[data-oper="${DIV}"]`).click();
     } else if (e.key === '.') {
       inputDot();
-    } else if (e.key === 'Enter') {
+    } else if (e.key === '=' || e.key === 'Enter') {
       inputEquals();
     } else {
       return;
