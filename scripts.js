@@ -11,7 +11,7 @@ function Calculator() {
       arr.length === 3
       && (arr[1] === '+' || arr[1] === '−' || arr[1] === '×' || arr[1] === '÷')
       && !isNaN(+arr[0])
-      && !isNaN(+[2])
+      && !isNaN(+arr[2])
       ) {
       if (!(arr[1] === '÷' && +arr[2] === 0)) {
         return String(this.operations[arr[1]](+arr[0], +arr[2]));
@@ -93,7 +93,7 @@ function inputOper(e) {
       display.textContent += e.target.dataset.oper;
     } else if (
       currentOper != ''
-      && display.textContent.indexOf(currentOper) === display.textContent.length - 1
+      && currentOper === display.textContent.at(-1)
       ) {
       display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
     } else {
@@ -157,13 +157,13 @@ document.body.addEventListener(
     } else if (+e.key >= 0 && +e.key <= 9) {
       document.querySelector(`[data-num="${e.key}"]`).click();
     } else if (e.key === '+') {
-      document.querySelector(`[data-oper="+"]`).click();
+      document.querySelector('[data-oper="+"]').click();
     } else if (e.key === '-') {
-      document.querySelector(`[data-oper="−"]`).click();
+      document.querySelector('[data-oper="−"]').click();
     } else if (e.key === '*') {
-      document.querySelector(`[data-oper="×"]`).click();
+      document.querySelector('[data-oper="×"]').click();
     } else if (e.key === '/') {
-      document.querySelector(`[data-oper="÷"]`).click();
+      document.querySelector('[data-oper="÷"]').click();
     } else if (e.key === '.') {
       inputDot();
     } else if (e.key === 'Enter') {
