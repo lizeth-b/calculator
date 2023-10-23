@@ -60,6 +60,61 @@ function parseDisplay(str) {
   }
 }
 
+function allClear() {
+  display.textContent = '0';
+}
+
+function backSpace() {
+  if (display.textContent.length > 1) {
+    let text = display.textContent.split('');
+    text.pop();
+    display.textContent = text.join('');
+  } else {
+    display.textContent = '0';
+  }
+}
+
+function inputNum(e) {
+  if (!isNaN(+e.target.dataset.num)) {
+    if (display.textContent === '0') {
+      display.textContent = e.target.dataset.num;
+    } else {
+      display.textContent += e.target.dataset.num; 
+    }
+  } else if (!errorMsgs.includes(display.textContent)) {
+    display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
+  }
+}
+
+function inputOper(e) {
+  if (isValidOperator(e.target.dataset.oper)) {
+    let currentOper = findOperator(display.textContent);
+    if (currentOper === '') {
+      display.textContent += e.target.dataset.oper;
+    } else if (
+      currentOper != ''
+      && display.textContent.indexOf(currentOper) === display.textContent.length - 1
+      ) {
+      display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
+    } else {
+      display.textContent = calc.calculate(parseDisplay(display.textContent));
+      display.textContent += e.target.dataset.oper;
+    }
+  } else if (!errorMsgs.includes(display.textContent)) {
+    display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
+  }
+}
+
+function inputDot() {
+  if (!parseDisplay(display.textContent).at(-1).includes('.')) {
+    display.textContent += '.';
+  }
+}
+
+function inputEquals() {
+  display.textContent = calc.calculate(parseDisplay(display.textContent));
+}
+
 const errorMsgs = ['What are you doing?', 
   'I can\'t compute that!',
   'Are you for real?',
@@ -71,64 +126,51 @@ const calc = new Calculator;
 const display = document.querySelector('[data-display]');
 
 const ac = document.querySelector('[data-ac]');
-ac.addEventListener('click', () => display.textContent = '0');
+ac.addEventListener('click', allClear);
 
 const undo = document.querySelector('[data-undo]');
-undo.addEventListener('click', () => {
-  if (display.textContent.length > 1) {
-    let text = display.textContent.split('');
-    text.pop();
-    display.textContent = text.join('');
-  } else {
-    display.textContent = '0';
-  }
-});
+undo.addEventListener('click', backSpace);
 
 const nums = document.querySelectorAll('[data-num]');
 nums.forEach((num) => {
-  num.addEventListener('click', (e) => {
-    if (!isNaN(+e.target.innerText)) {
-      if (display.textContent === '0') {
-        display.textContent = e.target.innerText;
-      } else {
-        display.textContent += e.target.innerText;
-      }
-    } else if (!errorMsgs.includes(display.textContent)) {
-      display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
-    }
-  });
+  num.addEventListener('click', inputNum);
 });
 
 const operators = document.querySelectorAll('[data-oper]');
 operators.forEach((oper) => {
-  oper.addEventListener('click', (e) => {
-    if (isValidOperator(e.target.innerText)) {
-      let currentOper = findOperator(display.textContent);
-      if (currentOper === '') {
-        display.textContent += e.target.innerText;
-      } else if (
-        currentOper != ''
-        && display.textContent.indexOf(currentOper) === display.textContent.length - 1
-        ) {
-        display.textContent = display.textContent.replace(currentOper, e.target.innerText);
-      } else {
-        display.textContent = calc.calculate(parseDisplay(display.textContent));
-        display.textContent += e.target.innerText;
-      }
-    } else if (!errorMsgs.includes(display.textContent)) {
-      display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
-    }
-  });
+  oper.addEventListener('click', inputOper);
 });
 
 const dot = document.querySelector('[data-dot]');
-dot.addEventListener('click', (e) => {
-  if (!parseDisplay(display.textContent).at(-1).includes('.')) {
-    display.textContent += '.';
-  }
-});
+dot.addEventListener('click', inputDot);
 
 const equals = document.querySelector('[data-equal]');
-equals.addEventListener('click', () => {
-  display.textContent = calc.calculate(parseDisplay(display.textContent));
-});
+equals.addEventListener('click', inputEquals);
+
+document.body.addEventListener(
+  'keydown',
+  (e) => {
+    if (e.key === 'Escape') {
+      allClear();
+    } else if (e.key === 'Backspace') {
+      backSpace();
+    } else if (+e.key >= 0 && +e.key <= 9) {
+      document.querySelector(`[data-num="${e.key}"]`).click();
+    } else if (e.key === '+') {
+      document.querySelector(`[data-oper="+"]`).click();
+    } else if (e.key === '-') {
+      document.querySelector(`[data-oper="−"]`).click();
+    } else if (e.key === '*') {
+      document.querySelector(`[data-oper="×"]`).click();
+    } else if (e.key === '/') {
+      document.querySelector(`[data-oper="÷"]`).click();
+    } else if (e.key === '.') {
+      inputDot();
+    } else if (e.key === 'Enter') {
+      inputEquals();
+    } else {
+      return;
+    }
+  },
+  true,
+);
