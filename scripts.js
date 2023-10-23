@@ -1,19 +1,24 @@
+const PLUS = '+';
+const MINUS = '−';
+const TIMES = '×';
+const DIV = '÷';
+
 function Calculator() {
   this.operations = {
-    '+': (a, b) => a + b,
-    '−': (a, b) => a - b,
-    '×': (a, b) => a * b,
-    '÷': (a, b) => a / b,
+    [PLUS]: (a, b) => a + b,
+    [MINUS]: (a, b) => a - b,
+    [TIMES]: (a, b) => a * b,
+    [DIV]: (a, b) => a / b,
   };
 
   this.calculate = function(arr) {
     if (
       arr.length === 3
-      && (arr[1] === '+' || arr[1] === '−' || arr[1] === '×' || arr[1] === '÷')
+      && (arr[1] === PLUS || arr[1] === MINUS || arr[1] === TIMES || arr[1] === DIV)
       && !isNaN(+arr[0])
       && !isNaN(+arr[2])
       ) {
-      if (!(arr[1] === '÷' && +arr[2] === 0)) {
+      if (!(arr[1] === DIV && +arr[2] === 0)) {
         return String(this.operations[arr[1]](+arr[0], +arr[2]));
       } else {
         return errorMsgs[Math.floor(Math.random() * 6)];
@@ -27,20 +32,20 @@ function Calculator() {
 }
 
 function isValidOperator(str) {
-  let operators = ['+', '−', '×', '÷'];
+  let operators = [PLUS, MINUS, TIMES, DIV];
   if (operators.includes(str)) return true;
   return false;
 }
 
 function findOperator(str) {
-  if (str.includes('+')) {
-    return '+';
-  } else if (str.includes('−')) {
-    return '−';
-  } else if (str.includes('×')) {
-    return '×';
-  } else if (str.includes('÷')) {
-    return '÷';
+  if (str.includes(PLUS)) {
+    return PLUS;
+  } else if (str.includes(MINUS)) {
+    return MINUS;
+  } else if (str.includes(TIMES)) {
+    return TIMES;
+  } else if (str.includes(DIV)) {
+    return DIV;
   }
   return '';
 }
@@ -157,13 +162,13 @@ document.body.addEventListener(
     } else if (+e.key >= 0 && +e.key <= 9) {
       document.querySelector(`[data-num="${e.key}"]`).click();
     } else if (e.key === '+') {
-      document.querySelector('[data-oper="+"]').click();
+      document.querySelector(`[data-oper="${PLUS}"]`).click();
     } else if (e.key === '-') {
-      document.querySelector('[data-oper="−"]').click();
+      document.querySelector(`[data-oper="${MINUS}"]`).click();
     } else if (e.key === '*') {
-      document.querySelector('[data-oper="×"]').click();
+      document.querySelector(`[data-oper="${TIMES}"]`).click();
     } else if (e.key === '/') {
-      document.querySelector('[data-oper="÷"]').click();
+      document.querySelector(`[data-oper="${DIV}"]`).click();
     } else if (e.key === '.') {
       inputDot();
     } else if (e.key === 'Enter') {
