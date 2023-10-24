@@ -2,6 +2,13 @@
   box-sizing: border-box;
 }
 
+:root {
+  --main-bg-color: #e9e6df;
+  --secondary-bg-color: #d4c6b1;
+  --main-text-color: #4c2e2e;
+  --secondary-text-color: #a15f22;
+}
+
 body {
   margin: 0px;
   font-family: 'Sometype Mono', monospace;
@@ -14,23 +21,50 @@ main {
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #e9e6df;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
 }
 
 .display,
 .controls {
+  width: 100vw;
   height: 50vh;
+}
+
+.display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  max-width: 100vw;
+  font-size: 5rem;
 }
 
 .row {
   display: flex;
-  width: 100vw;
   height: 20%;
 }
 
-.row button {
+button {
   flex: 1;
   font-family: inherit;
-  font-size: 100%;
+  font-size: 2rem;
   cursor: pointer;
+  border: none;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+button:hover {
+  background-color: var(--secondary-bg-color);
+}
+
+.ac,
+.undo,
+.oper,
+.dot {
+  color: var(--secondary-text-color);
+}
+
+.equal {
+
 }
