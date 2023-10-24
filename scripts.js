@@ -156,23 +156,65 @@ document.body.addEventListener(
   'keydown',
   (e) => {
     if (e.key === 'Escape') {
+      document.querySelector('[data-ac]').classList.add('pressed');
       allClear();
     } else if (e.key === 'Backspace') {
+      document.querySelector('[data-undo]').classList.add('pressed');
       backSpace();
     } else if (+e.key >= 0 && +e.key <= 9) {
-      document.querySelector(`[data-num="${e.key}"]`).click();
+      let element = document.querySelector(`[data-num="${e.key}"]`);
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '+') {
-      document.querySelector(`[data-oper="${PLUS}"]`).click();
+      let element = document.querySelector(`[data-oper="${PLUS}"]`);
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '-') {
-      document.querySelector(`[data-oper="${MINUS}"]`).click();
+      let element = document.querySelector(`[data-oper="${MINUS}"]`);
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '*') {
-      document.querySelector(`[data-oper="${TIMES}"]`).click();
+      let element = document.querySelector(`[data-oper="${TIMES}"]`);
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '/') {
-      document.querySelector(`[data-oper="${DIV}"]`).click();
+      let element = document.querySelector(`[data-oper="${DIV}"]`);
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '.') {
+      document.querySelector('[data-dot]').classList.add('pressed');
       inputDot();
     } else if (e.key === '=' || e.key === 'Enter') {
+      document.querySelector('[data-equal]').classList.add('pressed');
       inputEquals();
+    } else {
+      return;
+    }
+  },
+  true,
+);
+
+document.body.addEventListener(
+  'keyup',
+  (e) => {
+    if (e.key === 'Escape') {
+      document.querySelector('[data-ac]').classList.remove('pressed');
+    } else if (e.key === 'Backspace') {
+      document.querySelector('[data-undo]').classList.remove('pressed');
+    } else if (+e.key >= 0 && +e.key <= 9) {
+      document.querySelector(`[data-num="${e.key}"]`).classList.remove('pressed');
+    } else if (e.key === '+') {
+      document.querySelector(`[data-oper="${PLUS}"]`).classList.remove('pressed');
+    } else if (e.key === '-') {
+      document.querySelector(`[data-oper="${MINUS}"]`).classList.remove('pressed');
+    } else if (e.key === '*') {
+      document.querySelector(`[data-oper="${TIMES}"]`).classList.remove('pressed');
+    } else if (e.key === '/') {
+      document.querySelector(`[data-oper="${DIV}"]`).classList.remove('pressed');
+    } else if (e.key === '.') {
+      document.querySelector('[data-dot]').classList.remove('pressed');
+    } else if (e.key === '=' || e.key === 'Enter') {
+      document.querySelector('[data-equal]').classList.remove('pressed');
     } else {
       return;
     }
