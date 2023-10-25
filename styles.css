@@ -72,5 +72,10 @@ button:active,
 }
 
 .equal {
+  background-color: var(--secondary-text-color);
+  color: var(--main-bg-color);
+}
 
+.equal:hover {
+  color: var(--main-text-color);
 }

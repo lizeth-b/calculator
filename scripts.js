@@ -26,7 +26,7 @@ function Calculator() {
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0])) {
       return arr[0];
     } else {
-      return NaN;
+      return "Not a number";
     }
   };
 }
