@@ -21,11 +21,13 @@ function Calculator() {
       if (!(arr[1] === DIV && +arr[2] === 0)) {
         return String(this.operations[arr[1]](+arr[0], +arr[2]));
       } else {
+        hasErrorMsg = true;
         return errorMsgs[Math.floor(Math.random() * 6)];
       }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0])) {
       return arr[0];
     } else {
+      hasErrorMsg = true;
       return "Not a number";
     }
   };
@@ -67,6 +69,7 @@ function parseDisplay(str) {
 
 function allClear() {
   display.textContent = '0';
+  hasErrorMsg = false;
 }
 
 function backSpace() {
@@ -76,11 +79,16 @@ function backSpace() {
     display.textContent = text.join('');
   } else {
     display.textContent = '0';
+    hasErrorMsg = false;
   }
 }
 
 function inputNum(e) {
   if (!isNaN(+e.target.dataset.num)) {
+    if (hasErrorMsg) {
+      display.textContent = '0';
+      hasErrorMsg = false;
+    }
     if (display.textContent === '0') {
       display.textContent = e.target.dataset.num;
     } else {
@@ -88,11 +96,12 @@ function inputNum(e) {
     }
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
+    hasErrorMsg = true;
   }
 }
 
 function inputOper(e) {
-  if (isValidOperator(e.target.dataset.oper)) {
+  if (isValidOperator(e.target.dataset.oper) && !hasErrorMsg) {
     let currentOper = findOperator(display.textContent);
     if (currentOper === '') {
       display.textContent += e.target.dataset.oper;
@@ -107,11 +116,12 @@ function inputOper(e) {
     }
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
+    hasErrorMsg = true;
   }
 }
 
 function inputDot() {
-  if (!parseDisplay(display.textContent).at(-1).includes('.')) {
+  if (!parseDisplay(display.textContent).at(-1).includes('.') && !hasErrorMsg) {
     display.textContent += '.';
   }
 }
@@ -126,6 +136,7 @@ const errorMsgs = ['What are you doing?',
   'I\'ll pretend I didn\'t see that.',
   'Excuse me?',
   'You\'re not even making sense!'];
+let hasErrorMsg = false;
 
 const calc = new Calculator;
 const display = document.querySelector('[data-display]');
