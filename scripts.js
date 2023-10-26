@@ -84,6 +84,7 @@ function backSpace() {
 }
 
 function inputNum(e) {
+  if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
   if (!isNaN(+e.target.dataset.num)) {
     if (hasErrorMsg) {
       display.textContent = '0';
@@ -98,6 +99,10 @@ function inputNum(e) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
   }
+}
+
+function countDigits(str) {
+  return str.split('').filter((x) => !isNaN(+x) && (+x >= 0 && +x <= 9)).length;
 }
 
 function inputOper(e) {
