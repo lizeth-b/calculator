@@ -22,12 +22,14 @@ function Calculator() {
         return String(this.operations[arr[1]](+arr[0], +arr[2]));
       } else {
         hasErrorMsg = true;
+        resetOnNumInput = true;
         return errorMsgs[Math.floor(Math.random() * 6)];
       }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0])) {
       return arr[0];
     } else {
       hasErrorMsg = true;
+      resetOnNumInput = true;
       return "Not a number";
     }
   };
@@ -70,6 +72,7 @@ function parseDisplay(str) {
 function allClear() {
   display.textContent = '0';
   hasErrorMsg = false;
+  resetOnNumInput = false;
 }
 
 function backSpace() {
@@ -79,25 +82,26 @@ function backSpace() {
     display.textContent = text.join('');
   } else {
     display.textContent = '0';
-    hasErrorMsg = false;
   }
 }
 
 function inputNum(e) {
-  if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
   if (!isNaN(+e.target.dataset.num)) {
-    if (hasErrorMsg) {
+    if (resetOnNumInput || hasErrorMsg) {
       display.textContent = '0';
       hasErrorMsg = false;
+      resetOnNumInput = false;
     }
     if (display.textContent === '0') {
       display.textContent = e.target.dataset.num;
     } else {
+      if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
       display.textContent += e.target.dataset.num; 
     }
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
+    resetOnNumInput = true;
   }
 }
 
@@ -106,33 +110,49 @@ function countDigits(str) {
 }
 
 function inputOper(e) {
-  if (isValidOperator(e.target.dataset.oper) && !hasErrorMsg) {
-    let currentOper = findOperator(display.textContent);
-    if (currentOper === '') {
-      display.textContent += e.target.dataset.oper;
-    } else if (
-      currentOper != ''
-      && currentOper === display.textContent.at(-1)
-      ) {
-      display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
-    } else {
-      display.textContent = calc.calculate(parseDisplay(display.textContent));
-      display.textContent += e.target.dataset.oper;
+  if (isValidOperator(e.target.dataset.oper)) {
+    if (!hasErrorMsg) {
+      let currentOper = findOperator(display.textContent);
+      if (currentOper === '') {
+        display.textContent += e.target.dataset.oper;
+        resetOnNumInput = false;
+      } else if (
+        currentOper != ''
+        && currentOper === display.textContent.at(-1)
+        ) {
+        display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
+      } else {
+        display.textContent = calc.calculate(parseDisplay(display.textContent));
+        if (!hasErrorMsg) {
+          display.textContent += e.target.dataset.oper;
+          resetOnNumInput = false;
+        }
+      }
     }
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
+    resetOnNumInput = true;
   }
 }
 
 function inputDot() {
-  if (!parseDisplay(display.textContent).at(-1).includes('.') && !hasErrorMsg) {
-    display.textContent += '.';
+  if (!parseDisplay(display.textContent).at(-1).includes('.')) {
+    if (hasErrorMsg || resetOnNumInput) {
+      display.textContent = '0.';
+      hasErrorMsg = false;
+      resetOnNumInput = false;
+    } else {
+      display.textContent += '.';
+    }
   }
 }
 
 function inputEquals() {
-  display.textContent = calc.calculate(parseDisplay(display.textContent));
+  if (!hasErrorMsg) {
+    display.textContent = calc.calculate(parseDisplay(display.textContent));
+    resetOnNumInput = true;
+  }
 }
 
 const errorMsgs = ['What are you doing?', 
@@ -142,6 +162,7 @@ const errorMsgs = ['What are you doing?',
   'Excuse me?',
   'You\'re not even making sense!'];
 let hasErrorMsg = false;
+let resetOnNumInput = false;
 
 const calc = new Calculator;
 const display = document.querySelector('[data-display]');
