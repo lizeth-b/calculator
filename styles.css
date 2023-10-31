@@ -54,6 +54,15 @@ button {
   transition: all .2s;
 }
 
+.equal {
+  background-color: var(--secondary-text-color);
+  color: var(--main-bg-color);
+}
+
+.equal:hover {
+  color: var(--main-text-color);
+}
+
 button:hover {
   background-color: var(--secondary-bg-color);
 }
@@ -68,13 +77,4 @@ button:active,
 .oper,
 .dot {
   color: var(--secondary-text-color);
-}
-
-.equal {
-  background-color: var(--secondary-text-color);
-  color: var(--main-bg-color);
-}
-
-.equal:hover {
-  color: var(--main-text-color);
 }
