@@ -110,7 +110,7 @@ function inputOper(e) {
         currentOper != -1
         && currentOper === display.textContent.at(-1)
         ) {
-        display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
+        display.textContent = display.textContent.slice(0, -1) + e.target.dataset.oper;
       } else {
         display.textContent = calc.calculate(parseDisplay(display.textContent));
         if (!hasErrorMsg) {
