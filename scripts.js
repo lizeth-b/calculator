@@ -47,7 +47,6 @@ function findOperator(str) {
 function parseDisplay(str) {
   let input = [];
   let oper = findOperator(str);
-  console.log(oper);
   if (isValidOperator(oper)) {
     input.push(str.slice(0, str.lastIndexOf(oper)));
     input.push(oper);
@@ -104,7 +103,6 @@ function inputOper(e) {
   if (isValidOperator(e.target.dataset.oper)) {
     if (!hasErrorMsg) {
       let currentOper = findOperator(display.textContent);
-      console.log(currentOper);
       if (currentOper === -1) {
         display.textContent += e.target.dataset.oper;
         resetOnNumInput = false;
