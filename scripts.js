@@ -57,10 +57,10 @@ function parseDisplay(str) {
   let input = [];
   let oper = findOperator(str);
   if (isValidOperator(oper)) {
-    input.push(str.slice(0, str.indexOf(oper)));
+    input.push(str.slice(0, str.lastIndexOf(oper)));
     input.push(oper);
-    if (str.indexOf(oper) + 1 < str.length) {
-      input.push(str.slice(str.indexOf(oper) + 1, str.length));
+    if (str.lastIndexOf(oper) + 1 < str.length) {
+      input.push(str.slice(str.lastIndexOf(oper) + 1, str.length));
     }
     return input;
   } else {
