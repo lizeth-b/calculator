@@ -28,6 +28,14 @@ main {
   height: 50vh;
 }
 
+@media (min-width: 1400px) {
+  .display,
+  .controls {
+    width: 35vw;
+    height: 40vh;
+  }
+}
+
 .display {
   display: flex;
   justify-content: flex-end;
