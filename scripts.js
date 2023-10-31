@@ -37,8 +37,7 @@ function Calculator() {
 
 function isValidOperator(str) {
   let operators = [PLUS, MINUS, TIMES, DIV];
-  if (operators.includes(str)) return true;
-  return false;
+  return operators.includes(str) ? true : false;
 }
 
 function findOperator(str) {
