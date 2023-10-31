@@ -50,7 +50,7 @@ function findOperator(str) {
   } else if (str.includes(DIV)) {
     return DIV;
   }
-  return '';
+  return -1;
 }
 
 function parseDisplay(str) {
@@ -112,11 +112,11 @@ function inputOper(e) {
   if (isValidOperator(e.target.dataset.oper)) {
     if (!hasErrorMsg) {
       let currentOper = findOperator(display.textContent);
-      if (currentOper === '') {
+      if (currentOper === -1) {
         display.textContent += e.target.dataset.oper;
         resetOnNumInput = false;
       } else if (
-        currentOper != ''
+        currentOper != -1
         && currentOper === display.textContent.at(-1)
         ) {
         display.textContent = display.textContent.replace(currentOper, e.target.dataset.oper);
