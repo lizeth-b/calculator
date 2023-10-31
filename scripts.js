@@ -41,21 +41,13 @@ function isValidOperator(str) {
 }
 
 function findOperator(str) {
-  if (str.includes(PLUS)) {
-    return PLUS;
-  } else if (str.includes(MINUS)) {
-    return MINUS;
-  } else if (str.includes(TIMES)) {
-    return TIMES;
-  } else if (str.includes(DIV)) {
-    return DIV;
-  }
-  return -1;
+  return str[str.split('').findLastIndex((ch, index) => [PLUS, MINUS, TIMES, DIV].includes(ch) && str[index - 1] != 'e')];
 }
 
 function parseDisplay(str) {
   let input = [];
   let oper = findOperator(str);
+  console.log(oper);
   if (isValidOperator(oper)) {
     input.push(str.slice(0, str.lastIndexOf(oper)));
     input.push(oper);
@@ -112,6 +104,7 @@ function inputOper(e) {
   if (isValidOperator(e.target.dataset.oper)) {
     if (!hasErrorMsg) {
       let currentOper = findOperator(display.textContent);
+      console.log(currentOper);
       if (currentOper === -1) {
         display.textContent += e.target.dataset.oper;
         resetOnNumInput = false;
