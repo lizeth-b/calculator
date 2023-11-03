@@ -20,7 +20,7 @@ function Calculator() {
       ) {
       if (!(arr[1] === DIV && +arr[2] === 0)) {
         let result = this.operations[arr[1]](+arr[0].replace(/,/g, ''), +arr[2].replace(/,/g, ''));
-        return String(result).includes('e') ? String(result) : result.toLocaleString('en-US');
+        return String(result).includes('e') ? String(result) : result.toLocaleString('en-US', {maximumFractionDigits: 20});
       } else {
         hasErrorMsg = true;
         resetOnNumInput = true;
@@ -28,7 +28,7 @@ function Calculator() {
       }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0].replace(/,/g, ''))) {
       let firstNum = +arr[0].replace(/,/g, '');
-      return arr[0].includes('e') ? arr[0] : firstNum.toLocaleString('en-US');
+      return arr[0].includes('e') ? arr[0] : firstNum.toLocaleString('en-US', {maximumFractionDigits: 20});
     } else {
       hasErrorMsg = true;
       resetOnNumInput = true;
@@ -60,6 +60,18 @@ function parseDisplay(str) {
   }
 }
 
+function formatDisplay(arr) {
+  let result = arr.map((item) => {
+    if (!isNaN(+item.replace(/,/g, '')) && !item.includes('e')) {
+      let num = +item.replace(/,/g, '');
+      return num.toLocaleString('en-US', {maximumFractionDigits: 20});
+    } else {
+      return item;
+    }
+  });
+  display.textContent = result.join('');
+}
+
 function allClear(e) {
   e.target.blur();
   display.textContent = '0';
@@ -73,6 +85,7 @@ function backSpace(e) {
     let text = display.textContent.split('');
     text.pop();
     display.textContent = text.join('');
+    formatDisplay(parseDisplay(display.textContent));
   } else {
     display.textContent = '0';
   }
@@ -92,6 +105,7 @@ function inputNum(e) {
       if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
       display.textContent += e.target.dataset.num; 
     }
+    formatDisplay(parseDisplay(display.textContent));
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
@@ -108,11 +122,11 @@ function inputOper(e) {
   if (isValidOperator(e.target.dataset.oper)) {
     if (!hasErrorMsg) {
       let currentOper = findOperator(display.textContent);
-      if (currentOper === -1) {
+      if (currentOper === undefined) {
         display.textContent += e.target.dataset.oper;
         resetOnNumInput = false;
       } else if (
-        currentOper != -1
+        currentOper != undefined
         && currentOper === display.textContent.at(-1)
         ) {
         display.textContent = display.textContent.slice(0, -1) + e.target.dataset.oper;
