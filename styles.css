@@ -22,11 +22,6 @@ main {
   color: var(--main-text-color);
 }
 
-.calculator {
-  border: 3px solid var(--main-text-color);
-  border-radius: 30px;
-}
-
 .display,
 .controls {
   width: 100vw;
@@ -34,6 +29,12 @@ main {
 }
 
 @media (min-width: 1400px) {
+  .calculator {
+    border: 3px solid var(--main-text-color);
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
   .display,
   .controls {
     width: 30vw;
