@@ -73,12 +73,14 @@ button {
   color: var(--main-bg-color);
 }
 
-.equal:hover {
-  color: var(--main-text-color);
-}
+@media (hover: hover) {
+  button:hover {
+    background-color: var(--secondary-bg-color);
+  }
 
-button:hover {
-  background-color: var(--secondary-bg-color);
+  .equal:hover {
+    color: var(--main-text-color);
+  }
 }
 
 button:active,
