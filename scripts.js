@@ -27,7 +27,8 @@ function Calculator() {
         return errorMsgs[Math.floor(Math.random() * 6)];
       }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0].replace(/,/g, ''))) {
-      return arr[0].includes('e') ? arr[0] : +arr[0].toLocaleString('en-US');
+      let firstNum = +arr[0].replace(/,/g, '');
+      return arr[0].includes('e') ? arr[0] : firstNum.toLocaleString('en-US');
     } else {
       hasErrorMsg = true;
       resetOnNumInput = true;
