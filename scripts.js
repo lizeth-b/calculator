@@ -58,13 +58,15 @@ function parseDisplay(str) {
   }
 }
 
-function allClear() {
+function allClear(e) {
+  e.target.blur();
   display.textContent = '0';
   hasErrorMsg = false;
   resetOnNumInput = false;
 }
 
-function backSpace() {
+function backSpace(e) {
+  e.target.blur();
   if (display.textContent.length > 1) {
     let text = display.textContent.split('');
     text.pop();
@@ -75,6 +77,7 @@ function backSpace() {
 }
 
 function inputNum(e) {
+  e.target.blur();
   if (!isNaN(+e.target.dataset.num)) {
     if (resetOnNumInput || hasErrorMsg) {
       display.textContent = '0';
@@ -99,6 +102,7 @@ function countDigits(str) {
 }
 
 function inputOper(e) {
+  e.target.blur();
   if (isValidOperator(e.target.dataset.oper)) {
     if (!hasErrorMsg) {
       let currentOper = findOperator(display.textContent);
@@ -125,7 +129,8 @@ function inputOper(e) {
   }
 }
 
-function inputDot() {
+function inputDot(e) {
+  e.target.blur();
   if (!parseDisplay(display.textContent).at(-1).includes('.')) {
     if (hasErrorMsg || resetOnNumInput) {
       display.textContent = '0.';
@@ -137,7 +142,8 @@ function inputDot() {
   }
 }
 
-function inputEquals() {
+function inputEquals(e) {
+  e.target.blur();
   if (!hasErrorMsg) {
     display.textContent = calc.calculate(parseDisplay(display.textContent));
     resetOnNumInput = true;
@@ -182,11 +188,13 @@ document.body.addEventListener(
   'keydown',
   (e) => {
     if (e.key === 'Escape') {
-      document.querySelector('[data-ac]').classList.add('pressed');
-      allClear();
+      let element = document.querySelector('[data-ac]');
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === 'Backspace') {
-      document.querySelector('[data-undo]').classList.add('pressed');
-      backSpace();
+      let element = document.querySelector('[data-undo]');
+      element.classList.add('pressed');
+      element.click();
     } else if (+e.key >= 0 && +e.key <= 9) {
       let element = document.querySelector(`[data-num="${e.key}"]`);
       element.classList.add('pressed');
@@ -208,11 +216,13 @@ document.body.addEventListener(
       element.classList.add('pressed');
       element.click();
     } else if (e.key === '.') {
-      document.querySelector('[data-dot]').classList.add('pressed');
-      inputDot();
+      let element = document.querySelector('[data-dot]');
+      element.classList.add('pressed');
+      element.click();
     } else if (e.key === '=' || e.key === 'Enter') {
-      document.querySelector('[data-equal]').classList.add('pressed');
-      inputEquals();
+      let element = document.querySelector('[data-equal]');
+      element.classList.add('pressed');
+      element.click();
     } else {
       return;
     }
