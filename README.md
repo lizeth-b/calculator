@@ -1,5 +1,5 @@
 # calculator
 
-A basic calculator for The Odin Project.
+A basic calculator with keyboard support for The Odin Project.
 
 https://lizeth-b.github.io/calculator/
