@@ -28,20 +28,6 @@ main {
   height: 50vh;
 }
 
-@media (min-width: 1400px) {
-  .calculator {
-    border: 3px solid var(--main-text-color);
-    border-radius: 30px;
-    overflow: hidden;
-  }
-
-  .display,
-  .controls {
-    width: 30vw;
-    height: 40vh;
-  }
-}
-
 .display {
   display: flex;
   justify-content: flex-end;
@@ -73,16 +59,6 @@ button {
   color: var(--main-bg-color);
 }
 
-@media (hover: hover) {
-  button:hover {
-    background-color: var(--secondary-bg-color);
-  }
-
-  .equal:hover {
-    color: var(--main-text-color);
-  }
-}
-
 button:active,
 .pressed {
   background-color: color-mix(in srgb, var(--secondary-bg-color) 90%, black);
@@ -93,4 +69,43 @@ button:active,
 .oper,
 .dot {
   color: var(--secondary-text-color);
+}
+
+@media (hover: hover) {
+  button:hover {
+    background-color: var(--secondary-bg-color);
+  }
+
+  .equal:hover {
+    color: var(--main-text-color);
+  }
+}
+
+@media (max-width: 227px) {
+  .display {
+    font-size: 2rem;
+  }
+  
+  .row {
+    flex-direction: column;
+    height: initial;
+  }
+
+  button {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .calculator {
+    border: 3px solid var(--main-text-color);
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .display,
+  .controls {
+    width: 30vw;
+    height: 40vh;
+  }
 }
