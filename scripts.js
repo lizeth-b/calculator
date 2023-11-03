@@ -15,18 +15,19 @@ function Calculator() {
     if (
       arr.length === 3
       && (arr[1] === PLUS || arr[1] === MINUS || arr[1] === TIMES || arr[1] === DIV)
-      && !isNaN(+arr[0])
-      && !isNaN(+arr[2])
+      && !isNaN(+arr[0].replace(/,/g, ''))
+      && !isNaN(+arr[2].replace(/,/g, ''))
       ) {
       if (!(arr[1] === DIV && +arr[2] === 0)) {
-        return String(this.operations[arr[1]](+arr[0], +arr[2]));
+        let result = this.operations[arr[1]](+arr[0].replace(/,/g, ''), +arr[2].replace(/,/g, ''));
+        return String(result).includes('e') ? String(result) : result.toLocaleString('en-US');
       } else {
         hasErrorMsg = true;
         resetOnNumInput = true;
         return errorMsgs[Math.floor(Math.random() * 6)];
       }
-    } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0])) {
-      return arr[0];
+    } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0].replace(/,/g, ''))) {
+      return arr[0].includes('e') ? arr[0] : +arr[0].toLocaleString('en-US');
     } else {
       hasErrorMsg = true;
       resetOnNumInput = true;
