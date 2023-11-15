@@ -105,7 +105,7 @@ function inputNum(e) {
       if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
       display.textContent += e.target.dataset.num; 
     }
-    formatDisplay(parseDisplay(display.textContent));
+    if (e.target.dataset.num != '0') formatDisplay(parseDisplay(display.textContent));
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
