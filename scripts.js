@@ -62,7 +62,7 @@ function parseDisplay(str) {
 
 function formatDisplay(arr) {
   let result = arr.map((item) => {
-    if (!isNaN(+item.replace(/,/g, '')) && !item.includes('e')) {
+    if (!isNaN(+item.replace(/,/g, '')) && !item.includes('e') && !item.includes('.')) {
       let num = +item.replace(/,/g, '');
       return num.toLocaleString('en-US', {maximumFractionDigits: 15});
     } else {
@@ -105,7 +105,7 @@ function inputNum(e) {
       if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
       display.textContent += e.target.dataset.num; 
     }
-    if (e.target.dataset.num != '0') formatDisplay(parseDisplay(display.textContent));
+    formatDisplay(parseDisplay(display.textContent));
   } else if (!errorMsgs.includes(display.textContent)) {
     display.textContent = errorMsgs[Math.floor(Math.random() * 6)];
     hasErrorMsg = true;
