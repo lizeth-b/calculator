@@ -20,7 +20,7 @@ function Calculator() {
       ) {
       if (!(arr[1] === DIV && +arr[2] === 0)) {
         let result = this.operations[arr[1]](+arr[0].replace(/,/g, ''), +arr[2].replace(/,/g, ''));
-        return String(result).includes('e') ? String(result) : result.toLocaleString('en-US', {maximumFractionDigits: 15});
+        return String(result).includes('e') ? String(result) : result.toLocaleString('en-US', {maximumFractionDigits: 12});
       } else {
         hasErrorMsg = true;
         resetOnNumInput = true;
@@ -28,7 +28,7 @@ function Calculator() {
       }
     } else if ((arr.length === 1 || arr.length === 2) && !isNaN(+arr[0].replace(/,/g, ''))) {
       let firstNum = +arr[0].replace(/,/g, '');
-      return arr[0].includes('e') ? arr[0] : firstNum.toLocaleString('en-US', {maximumFractionDigits: 15});
+      return arr[0].includes('e') ? arr[0] : firstNum.toLocaleString('en-US', {maximumFractionDigits: 12});
     } else {
       hasErrorMsg = true;
       resetOnNumInput = true;
@@ -64,7 +64,7 @@ function formatDisplay(arr) {
   let result = arr.map((item) => {
     if (!isNaN(+item.replace(/,/g, '')) && !item.includes('e') && !item.includes('.')) {
       let num = +item.replace(/,/g, '');
-      return num.toLocaleString('en-US', {maximumFractionDigits: 15});
+      return num.toLocaleString('en-US', {maximumFractionDigits: 12});
     } else {
       return item;
     }
@@ -102,7 +102,7 @@ function inputNum(e) {
     if (display.textContent === '0') {
       display.textContent = e.target.dataset.num;
     } else {
-      if (countDigits(parseDisplay(display.textContent).at(-1)) > 14) return;
+      if (countDigits(parseDisplay(display.textContent).at(-1)) > 11) return;
       display.textContent += e.target.dataset.num; 
     }
     formatDisplay(parseDisplay(display.textContent));
